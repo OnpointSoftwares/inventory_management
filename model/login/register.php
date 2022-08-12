@@ -13,7 +13,7 @@
 		$registerUsername = htmlentities($_POST['registerUsername']);
 		$registerPassword1 = htmlentities($_POST['registerPassword1']);
 		$registerPassword2 = htmlentities($_POST['registerPassword2']);
-		
+		$registerStoreName=htmlentities($_POST['registerStoreName']);
 		if(!empty($registerFullName) && !empty($registerUsername) && !empty($registerPassword1) && !empty($registerPassword2)){
 			
 			// Sanitize name
@@ -55,9 +55,9 @@
 					// Start inserting user to DB
 					// Encrypt the password
 					$hashedPassword = md5($registerPassword1);
-					$insertUserSql = 'INSERT INTO user(fullName, username, password) VALUES(:fullName, :username, :password)';
+					$insertUserSql = 'INSERT INTO user(fullName, username, password,StoreId) VALUES(:fullName, :username, :password,:storeID)';
 					$insertUserStatement = $conn->prepare($insertUserSql);
-					$insertUserStatement->execute(['fullName' => $registerFullName, 'username' => $registerUsername, 'password' => $hashedPassword]);
+					$insertUserStatement->execute(['fullName' => $registerFullName, 'username' => $registerUsername, 'password' => $hashedPassword,'storeID'=>$registerStoreName]);
 					
 					echo '<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>Registration complete.</div>';
 					exit();

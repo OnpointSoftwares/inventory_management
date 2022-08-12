@@ -40,12 +40,19 @@
 			if($checkUserStatement->rowCount() > 0){
 				// Valid credentials. Hence, start the session
 				$row = $checkUserStatement->fetch(PDO::FETCH_ASSOC);
-
-				$_SESSION['loggedIn'] = '1';
+            $checkStoreSql = 'SELECT * FROM stores WHERE id = :storeId';
+			$checkStoreStatement = $conn->prepare($checkStoreSql);
+			$storeId=$row['StoreId'];
+			$checkStoreStatement->execute(['storeId' => $storeId]);
+			$store = $checkStoreStatement->fetch(PDO::FETCH_ASSOC);
+					$_SESSION['loggedIn'] = '1';
 				$_SESSION['fullName'] = $row['fullName'];
-				
+				$_SESSION['Store'] = $store['StoreName'];
+				$_SESSION['StoreId'] = $row['StoreId'];
+				$_SESSION['level'] = $row['level'];
 				echo '<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>Login success! Redirecting you to home page...</div>';
 				exit();
+				
 			} else {
 				echo '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button>Incorrect Username / Password</div>';
 				exit();

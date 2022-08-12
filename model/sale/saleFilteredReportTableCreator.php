@@ -26,6 +26,7 @@
 							<th>Discount %</th>
 							<th>Quantity</th>
 							<th>Unit Price</th>
+							<th>Store</th>
 							<th>Total Price</th>
 						</tr>
 					</thead>
@@ -47,7 +48,9 @@
 							'<td>' . $row['saleDate'] . '</td>' .
 							'<td>' . $row['discount'] . '</td>' .
 							'<td>' . $row['quantity'] . '</td>' .
+							'<td>' . $row['StoreName'] . '</td>' .
 							'<td>' . $row['unitPrice'] . '</td>' .
+
 							'<td>' . $totalPrice . '</td>' .
 						'</tr>';
 		}

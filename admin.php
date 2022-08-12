@@ -5,22 +5,7 @@
 		header('Location: login.php');
 		exit();
 	}
-	else
-	{
-			if (isset($_SESSION['level'])) {
-			if($_SESSION['level']=="admin")
-			{
-				header("location:admin.php");
-			}
-			elseif ($_SESSION['level']=="user") {
-				
-			}
-			else
-			{
-				header("location:login.php");
-			}
-		}
-	}
+	
 	require_once('inc/config/constants.php');
 	require_once('inc/config/db.php');
 	require_once('inc/header.html');
@@ -35,9 +20,12 @@
 		<div class="col-lg-2">
 		<h1 class="my-4"></h1>
 			<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-			  <a class="nav-link" id="v-pills-sale-tab" data-toggle="pill" href="#v-pills-sale" role="tab" aria-controls="v-pills-sale" aria-selected="false">Sale</a>
-			  <a class="nav-link" id="v-pills-customer-tab" data-toggle="pill" href="#v-pills-customer" role="tab" aria-controls="v-pills-customer" aria-selected="false">Customer</a>
+			  <a class="nav-link active" id="v-pills-item-tab" data-toggle="pill" href="#v-pills-item" role="tab" aria-controls="v-pills-item" aria-selected="true">Item</a>
+			  <a class="nav-link" id="v-pills-purchase-tab" data-toggle="pill" href="#v-pills-purchase" role="tab" aria-controls="v-pills-purchase" aria-selected="false">Purchase</a>
+			  <a class="nav-link" id="v-pills-vendor-tab" data-toggle="pill" href="#v-pills-vendor" role="tab" aria-controls="v-pills-vendor" aria-selected="false">Vendor</a>
+			  <a class="nav-link" id="v-pills-customer-tab" data-toggle="pill" href="#v-pills-customer" role="tab" aria-controls="v-pills-customer" aria-selected="false">Store Keepers</a>
 			  <a class="nav-link" id="v-pills-search-tab" data-toggle="pill" href="#v-pills-search" role="tab" aria-controls="v-pills-search" aria-selected="false">Search</a>
+			  <a class="nav-link" id="v-pills-reports-tab" data-toggle="pill" href="#v-pills-reports" role="tab" aria-controls="v-pills-reports" aria-selected="false">Reports</a>
 			</div>
 		</div>
 		 <div class="col-lg-10">
@@ -73,6 +61,12 @@
 								  <input class="form-control invTooltip" type="number" readonly  id="itemDetailsProductID" name="itemDetailsProductID" title="This will be auto-generated when you add a new item">
 								</div>
 							  </div>
+							   <div class="form-group">
+						<label for="registerPassword1">Store Name<span class="requiredIcon">*</span></label>
+							<select class="form-control" id="registerStoreName">
+							<?php include 'Inc/storeList.php'; ?>
+						</select>
+					  </div>
 							  <div class="form-row">
 								  <div class="form-group col-md-6">
 									<label for="itemDetailsItemName">Item Name<span class="requiredIcon">*</span></label>
@@ -291,14 +285,6 @@
 					<div id="saleDetailsMessage"></div>
 					<form>
 					  <div class="form-row">
-					  	<?php 
-					  	$store=$_SESSION['Store']; 
-					  	?>
-					  		<div class="form-group col-md-3">
-						  <label for="saleDetailsItemNumber">Store<span class="requiredIcon">*</span></label>
-						  <input type="text" class="form-control" value="<?php  echo $store; ?>" id="saleDetailsSaleStore" name="saleDetailsSaleStore" autocomplete="off" disabled>
-						  <div id="saleDetailsItemNumberSuggestionsDiv" class="customListDivWidth"></div>
-						</div>
 						<div class="form-group col-md-3">
 						  <label for="saleDetailsItemNumber">Item Number<span class="requiredIcon">*</span></label>
 						  <input type="text" class="form-control" id="saleDetailsItemNumber" name="saleDetailsItemNumber" autocomplete="off">
@@ -370,68 +356,51 @@
 			  </div>
 			  <div class="tab-pane fade" id="v-pills-customer" role="tabpanel" aria-labelledby="v-pills-customer-tab">
 				<div class="card card-outline-secondary my-4">
-				  <div class="card-header">Customer Details</div>
+				  <div class="card-header">Store Keepers Details</div>
 				  <div class="card-body">
 				  <!-- Div to show the ajax message from validations/db submission -->
-				  <div id="customerDetailsMessage"></div>
-					 <form> 
-					  <div class="form-row">
-						<div class="form-group col-md-6">
-						  <label for="customerDetailsCustomerFullName">Full Name<span class="requiredIcon">*</span></label>
-						  <input type="text" class="form-control" id="customerDetailsCustomerFullName" name="customerDetailsCustomerFullName">
-						</div>
-						<div class="form-group col-md-2">
-							<label for="customerDetailsStatus">Status</label>
-							<select id="customerDetailsStatus" name="customerDetailsStatus" class="form-control chosenSelect">
-								<?php include('inc/statusList.html'); ?>
-							</select>
-						</div>
-						 <div class="form-group col-md-3">
-							<label for="customerDetailsCustomerID">Customer ID</label>
-							<input type="text" class="form-control invTooltip" id="customerDetailsCustomerID" name="customerDetailsCustomerID" title="This will be auto-generated when you add a new customer" autocomplete="off">
-							<div id="customerDetailsCustomerIDSuggestionsDiv" class="customListDivWidth"></div>
-						</div>
+				  <div class="container">
+			  <div class="row justify-content-center">
+			  <div class="col-sm-12 col-md-5 col-lg-5">
+				<div class="card">
+				  <div class="card-header">
+					Register Store Keeper
+				  </div>
+				  <div class="card-body">
+					<form action="">
+					<div id="registerMessage"></div>
+					  <div class="form-group">
+						<label for="registerFullName">Name<span class="requiredIcon">*</span></label>
+						<input type="text" class="form-control" id="registerFullName" name="registerFullName">
+						<!-- <small id="emailHelp" class="form-text text-muted"></small> -->
 					  </div>
-					  <div class="form-row">
-						  <div class="form-group col-md-3">
-							<label for="customerDetailsCustomerMobile">Phone (mobile)<span class="requiredIcon">*</span></label>
-							<input type="text" class="form-control invTooltip" id="customerDetailsCustomerMobile" name="customerDetailsCustomerMobile" title="Do not enter leading 0">
-						  </div>
-						  <div class="form-group col-md-3">
-							<label for="customerDetailsCustomerPhone2">Phone 2</label>
-							<input type="text" class="form-control invTooltip" id="customerDetailsCustomerPhone2" name="customerDetailsCustomerPhone2" title="Do not enter leading 0">
-						  </div>
-						  <div class="form-group col-md-6">
-							<label for="customerDetailsCustomerEmail">Email</label>
-							<input type="email" class="form-control" id="customerDetailsCustomerEmail" name="customerDetailsCustomerEmail">
-						</div>
+					   <div class="form-group">
+						<label for="registerUsername">Username<span class="requiredIcon">*</span></label>
+						<input type="email" class="form-control" id="registerUsername" name="registerUsername" autocomplete="on">
 					  </div>
 					  <div class="form-group">
-						<label for="customerDetailsCustomerAddress">Address<span class="requiredIcon">*</span></label>
-						<input type="text" class="form-control" id="customerDetailsCustomerAddress" name="customerDetailsCustomerAddress">
+						<label for="registerPassword1">Store Name<span class="requiredIcon">*</span></label>
+							<select class="form-control" id="registerStoreName">
+							<?php include 'Inc/storeList.php'; ?>
+						</select>
 					  </div>
 					  <div class="form-group">
-						<label for="customerDetailsCustomerAddress2">Address 2</label>
-						<input type="text" class="form-control" id="customerDetailsCustomerAddress2" name="customerDetailsCustomerAddress2">
+						<label for="registerPassword1">Password<span class="requiredIcon">*</span></label>
+						<input type="password" class="form-control" id="registerPassword1" name="registerPassword1">
 					  </div>
-					  <div class="form-row">
-						<div class="form-group col-md-6">
-						  <label for="customerDetailsCustomerCity">City</label>
-						  <input type="text" class="form-control" id="customerDetailsCustomerCity" name="customerDetailsCustomerCity">
-						</div>
-						<div class="form-group col-md-4">
-						  <label for="customerDetailsCustomerDistrict">District</label>
-						  <select id="customerDetailsCustomerDistrict" name="customerDetailsCustomerDistrict" class="form-control chosenSelect">
-							<?php include('inc/districtList.html'); ?>
-						  </select>
-						</div>
-					  </div>					  
-					  <button type="button" id="addCustomer" name="addCustomer" class="btn btn-success">Add Customer</button>
-					  <button type="button" id="updateCustomerDetailsButton" class="btn btn-primary">Update</button>
-					  <button type="button" id="deleteCustomerButton" class="btn btn-danger">Delete</button>
+					  <div class="form-group">
+						<label for="registerPassword2">Re-enter password<span class="requiredIcon">*</span></label>
+						<input type="password" class="form-control" id="registerPassword2" name="registerPassword2">
+					  </div>
+					  <button type="button" id="register" class="btn btn-success">Register</button>
 					  <button type="reset" class="btn">Clear</button>
-					 </form>
-				  </div> 
+					</form>
+				  </div>
+				</div>
+				</div>
+			  </div>
+			</div>
+			</div>
 				</div>
 			  </div>
 			  

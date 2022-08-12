@@ -117,7 +117,9 @@ $(document).ready(function(){
 	$('#addCustomer').on('click', function(){
 		addCustomer();
 	});
-	
+	$('#addStoreKeeper').on('click', function(){
+		addStoreKeeper();
+	});
 	// Listen to vendor add button
 	$('#addVendor').on('click', function(){
 		addVendor();
@@ -928,8 +930,7 @@ function addCustomer() {
 	});
 }
 
-
-// Function to call the insertVendor.php script to insert vendor data to db
+//Function to call the insertVendor.php script to insert vendor data to db
 function addVendor() {
 	var vendorDetailsVendorFullName = $('#vendorDetailsVendorFullName').val();
 	var vendorDetailsVendorEmail = $('#vendorDetailsVendorEmail').val();
@@ -978,7 +979,7 @@ function addItem() {
 	var itemDetailsUnitPrice = $('#itemDetailsUnitPrice').val();
 	var itemDetailsStatus = $('#itemDetailsStatus').val();
 	var itemDetailsDescription = $('#itemDetailsDescription').val();
-	
+	var registerStoreName = $('#registerStoreName').val();
 	$.ajax({
 		url: 'model/item/insertItem.php',
 		method: 'POST',
@@ -990,6 +991,7 @@ function addItem() {
 			itemDetailsUnitPrice:itemDetailsUnitPrice,
 			itemDetailsStatus:itemDetailsStatus,
 			itemDetailsDescription:itemDetailsDescription,
+			registerStoreName:registerStoreName,
 		},
 		success: function(data){
 			$('#itemDetailsMessage').fadeIn();
@@ -1051,7 +1053,7 @@ function addSale() {
 	var saleDetailsCustomerID = $('#saleDetailsCustomerID').val();
 	var saleDetailsCustomerName = $('#saleDetailsCustomerName').val();
 	var saleDetailsSaleDate = $('#saleDetailsSaleDate').val();
-	
+	var saleDetailsStore=$('#saleDetailsSaleStore').val();
 	$.ajax({
 		url: 'model/sale/insertSale.php',
 		method: 'POST',
@@ -1064,6 +1066,7 @@ function addSale() {
 			saleDetailsCustomerID:saleDetailsCustomerID,
 			saleDetailsCustomerName:saleDetailsCustomerName,
 			saleDetailsSaleDate:saleDetailsSaleDate,
+			saleDetailsStore:saleDetailsStore,
 		},
 		success: function(data){
 			$('#saleDetailsMessage').fadeIn();

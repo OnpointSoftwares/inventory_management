@@ -4,7 +4,10 @@ $(document).ready(function(){
 	$('#register').on('click', function(){
 		register();
 	});
-	
+	//listen to admin login
+	$('#Login').on('click', function(){
+		loginAdmin();
+	});
 	// Listen to reset password button
 	$('#resetPasswordButton').on('click', function(){
 		resetPassword();
@@ -14,6 +17,7 @@ $(document).ready(function(){
 	$('#login').on('click', function(){
 		login();
 	});
+	
 });
 
 
@@ -23,7 +27,7 @@ function register(){
 	var registerUsername = $('#registerUsername').val();
 	var registerPassword1 = $('#registerPassword1').val();
 	var registerPassword2 = $('#registerPassword2').val();
-	
+	var registerStoreName = $('#registerStoreName').val();
 	$.ajax({
 		url: 'model/login/register.php',
 		method: 'POST',
@@ -32,6 +36,7 @@ function register(){
 			registerUsername:registerUsername,
 			registerPassword1:registerPassword1,
 			registerPassword2:registerPassword2,
+			registerStoreName:registerStoreName
 		},
 		success: function(data){
 			$('#registerMessage').html(data);
@@ -59,7 +64,6 @@ function resetPassword(){
 		}
 	});
 }
-
 
 // Function to login a user
 function login(){

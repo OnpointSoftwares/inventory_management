@@ -1,7 +1,7 @@
     <!-- Footer -->
-    <footer class="footer bg-dark">
+    <footer class="footer" id="nav">
       <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Inventory System <?php echo date('Y'); ?></p>
+        <p class="m-0 text-center text-white">Copyright &copy; Multi Store Inventory System <?php echo date('Y'); ?></p>
       </div>
     </footer>
 

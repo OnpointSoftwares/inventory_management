@@ -12,7 +12,7 @@
 		$customerID = htmlentities($_POST['saleDetailsCustomerID']);
 		$customerName = htmlentities($_POST['saleDetailsCustomerName']);
 		$saleDate = htmlentities($_POST['saleDetailsSaleDate']);
-		
+		$saleStore= htmlentities($_POST['saleDetailsStore']);
 		// Check if mandatory fields are not empty
 		if(!empty($itemNumber) && isset($customerID) && isset($saleDate) && isset($quantity) && isset($unitPrice)){
 			
@@ -106,9 +106,9 @@
 						$customerName = $customerRow['fullName'];
 						
 						// INSERT data to sale table
-						$insertSaleSql = 'INSERT INTO sale(itemNumber, itemName, discount, quantity, unitPrice, customerID, customerName, saleDate) VALUES(:itemNumber, :itemName, :discount, :quantity, :unitPrice, :customerID, :customerName, :saleDate)';
+						$insertSaleSql = 'INSERT INTO sale(itemNumber, itemName, discount, quantity, unitPrice, customerID, customerName, saleDate,StoreName) VALUES(:itemNumber, :itemName, :discount, :quantity, :unitPrice, :customerID, :customerName, :saleDate,:storeName)';
 						$insertSaleStatement = $conn->prepare($insertSaleSql);
-						$insertSaleStatement->execute(['itemNumber' => $itemNumber, 'itemName' => $itemName, 'discount' => $discount, 'quantity' => $quantity, 'unitPrice' => $unitPrice, 'customerID' => $customerID, 'customerName' => $customerName, 'saleDate' => $saleDate]);
+						$insertSaleStatement->execute(['itemNumber' => $itemNumber, 'itemName' => $itemName, 'discount' => $discount, 'quantity' => $quantity, 'unitPrice' => $unitPrice, 'customerID' => $customerID, 'customerName' => $customerName, 'saleDate' => $saleDate, 'storeName' => $saleStore]);
 						
 						// UPDATE the stock in item table
 						$stockUpdateSql = 'UPDATE item SET stock = :stock WHERE itemNumber = :itemNumber';

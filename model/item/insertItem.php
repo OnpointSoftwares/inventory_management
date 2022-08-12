@@ -15,6 +15,7 @@
 		$unitPrice = htmlentities($_POST['itemDetailsUnitPrice']);
 		$status = htmlentities($_POST['itemDetailsStatus']);
 		$description = htmlentities($_POST['itemDetailsDescription']);
+		$registerStoreName=htmlentities($_POST['registerStoreName']);
 		
 		// Check if mandatory fields are not empty
 		if(!empty($itemNumber) && !empty($itemName) && isset($quantity) && isset($unitPrice)){
@@ -70,9 +71,9 @@
 			} else {
 				// Item does not exist, therefore, you can add it to DB as a new item
 				// Start the insert process
-				$insertItemSql = 'INSERT INTO item(itemNumber, itemName, discount, stock, unitPrice, status, description) VALUES(:itemNumber, :itemName, :discount, :stock, :unitPrice, :status, :description)';
+				$insertItemSql = 'INSERT INTO item(itemNumber, itemName, discount, stock, unitPrice, status, description,StoreId) VALUES(:itemNumber, :itemName, :discount, :stock, :unitPrice, :status, :description,:StoreID)';
 				$insertItemStatement = $conn->prepare($insertItemSql);
-				$insertItemStatement->execute(['itemNumber' => $itemNumber, 'itemName' => $itemName, 'discount' => $discount, 'stock' => $quantity, 'unitPrice' => $unitPrice, 'status' => $status, 'description' => $description]);
+				$insertItemStatement->execute(['itemNumber' => $itemNumber, 'itemName' => $itemName, 'discount' => $discount, 'stock' => $quantity, 'unitPrice' => $unitPrice, 'status' => $status, 'description' => $description,'StoreID' => $registerStoreName]);
 				echo '<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>Item added to database.</div>';
 				exit();
 			}
